@@ -4,3 +4,4 @@ Final result should be:  wonderful farm with fat cats
 But i cant resolve isssue with setters
 
 
+
