@@ -1,2 +1,5 @@
 # IntelliasHW10
-We try to use interfaces and structs
+In this HomeWork we try to use Interfaces and structs.
+Final result should be:  wonderful farm with fat cats
+
+
