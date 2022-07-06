@@ -25,8 +25,8 @@ func (c cow) receiveFoodWeight() float64 {
 	return c.weight * cowsFoodPerKilo
 }
 
-func (c cow) myName() string {
-	return "корови " + c.name
+func (c cow) String() string {
+	return fmt.Sprintf("корови %s", c.name)
 }
 func (c cow) receiveWeightOfAnimal() float64 {
 	return c.weight
@@ -42,8 +42,8 @@ func (c cat) receiveFoodWeight() float64 {
 	return c.weight * catsFoodPerKilo
 }
 
-func (c cat) myName() string {
-	return "кота " + c.name
+func (c cat) String() string {
+	return fmt.Sprintf("кота %s", c.name)
 }
 
 func (c cat) receiveWeightOfAnimal() float64 {
@@ -59,8 +59,8 @@ type dog struct {
 func (d dog) receiveFoodWeight() float64 {
 	return d.weight * dogsFoodPerKilo
 }
-func (d dog) myName() string {
-	return "собаки " + d.name
+func (d dog) String() string {
+	return fmt.Sprintf("собаки %s", d.name)
 }
 
 func (d dog) receiveWeightOfAnimal() float64 {
@@ -72,14 +72,10 @@ type weightGetter interface {
 	receiveWeightOfAnimal() float64
 }
 
-type nameGetter interface {
-	myName() string
-}
-
 // виходячи з умови задачі можно було обійтись одним інтерфейсом, але якщо потенційно ми б розділили
 //нажаль не вдалось перемогти сеттери(
 type animals interface {
-	nameGetter
+	fmt.Stringer
 	weightGetter
 }
 
@@ -103,11 +99,11 @@ func makeSomeAnimal(typeOfAnimal string, name string, weight float64) (animals, 
 }
 
 //receiveInfo друкує інформацію про нашу ферму
-func receiveInfo(farm *[]animals) {
+func receiveInfo(farm []animals) {
 	var total float64
-	for _, t := range *farm {
+	for _, t := range farm {
 		total += t.receiveFoodWeight()
-		fmt.Printf("Вага корму на місяць для %s з власною вагою  %0.2f становить %.2f кг \n", t.myName(), t.receiveWeightOfAnimal(), t.receiveFoodWeight())
+		fmt.Printf("Вага корму на місяць для %s з власною вагою %0.2f становить %.2f кг \n", t.String(), t.receiveWeightOfAnimal(), t.receiveFoodWeight())
 	}
 	fmt.Println("---------")
 	fmt.Printf("Загальна потреба в кормі для ферми становить: %.2f кг \n ", total)
@@ -143,5 +139,5 @@ func main() {
 			farm = append(farm, newVal)
 		}
 	}
-	receiveInfo(&farm)
+	receiveInfo(farm)
 }
